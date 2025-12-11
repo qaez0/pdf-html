@@ -434,19 +434,8 @@ function App() {
             </div>
             <div className="market-card-body">
               <p>
-                我们主要面向寻求线上博彩娱乐的印度成年用户，尤其是那些
+                我们主要面向寻求线上博彩娱乐的成年用户，尤其是那些
                 对数字技术使用较为熟悉，且积极寻找创新型娱乐方式的目标群体。
-              </p>
-            </div>
-          </div>
-
-          <div className="market-card">
-            <div className="market-card-top">
-              <h3>地域重点</h3>
-            </div>
-            <div className="market-card-body">
-              <p>
-                我们的核心市场布局覆盖整个印度，重点聚焦于孟买、德里、班加罗尔等一线及主要城市的核心人群。同时通过多渠道拓展，实现更广泛的覆盖，触达不同层级与地区的用户。
               </p>
             </div>
           </div>
@@ -457,7 +446,7 @@ function App() {
             </div>
             <div className="market-card-body">
               <p>
-                在竞争激烈的印度线上博彩市场中，我们既面临具备品牌知名度和用户基础的成熟平台，
+                在竞争激烈的线上博彩市场中，我们既面临具备品牌知名度和用户基础的成熟平台，
                 也将面对不断涌现的新兴竞争者。
                 我们将通过持续创新、强化安全保障以及优化整体用户体验，
                 提供更具竞争力的产品与服务，
@@ -490,14 +479,14 @@ function App() {
           <p className="eyebrow">我司后端系统</p>
           <h2>后端系统</h2>
           <p className="lead backend-lead" style={{ textAlign: "right" }}>
-            我们的系统已在行业内稳定运行十年，其中在印度市场成功运营三年。丰富的实践经验使我们的系统日趋成熟，能够稳健地支撑并满足印度市场的多元化需求。
+            我们的系统已在行业内稳定运行十年，长期在多地成功运营。丰富的实践经验使我们的系统日趋成熟，能够稳健地支撑并满足多元化的市场需求。
           </p>
 
           <div className="backend-grid">
             {[
               [
                 "营销推广系统",
-                "我们的系统专为印度市场的营销推广需求量身定制，提供包括首存优惠、复存奖励等多样化的促销功能。所有促销活动均可通过我们便捷易用的后台管理系统轻松配置与灵活调整。",
+                "我们的系统专为本地化的营销推广需求量身定制，提供包括首存优惠、复存奖励等多样化的促销功能。所有促销活动均可通过我们便捷易用的后台管理系统轻松配置与灵活调整。",
               ],
               [
                 "裂变推广机制",
@@ -509,7 +498,7 @@ function App() {
               ],
               [
                 "财务结算系统",
-                "我们经过三年精心打磨的财务结算系统专为印度市场量身定制。凭借快速的资金交易处理能力，不仅提升了用户体验，更显著增强了财务运营的整体效率。",
+                "我们经过多年精心打磨的财务结算系统专为本地化需求量身定制。凭借快速的资金交易处理能力，不仅提升了用户体验，更显著增强了财务运营的整体效率。",
               ],
             ].map(([title, desc], index) => (
               <div key={title} className="backend-card">
@@ -579,7 +568,7 @@ function App() {
       <section className="options">
         <div className="options-inner">
           <div className="options-grid">
-            <div className="option-card option-affiliate">
+            {/* <div className="option-card option-affiliate">
               <h2
                 style={{
                   color: "#FFFFFF",
@@ -634,7 +623,7 @@ function App() {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             <div className="option-card option-brand">
               <h2>方案二：打造您的专属品牌</h2>
@@ -677,13 +666,12 @@ function App() {
         </div>
       </section>
 
-      <section className="conclusion">
+      {/* <section className="conclusion">
         <div className="conclusion-content">
           <h2>结论</h2>
           <p>
-            现在正是为进入印度市场打下基础的有利时机。随着印度超级联赛（IPL）将于三月开赛，这一重要赛事为我们提供了极佳的切入窗口。在当今互联网时代，越来越多的用户倾向于通过线上渠道参与博彩活动，而
-            IPL 的举办也为我们触达更大规模的目标人群创造了重要机会。
-            随着网站用户规模的不断积累与扩大，平台将具备可观的创收潜力。我们期望，借助我方在行业内的经验与专业服务，结合贵方在印度本地的资源与渠道优势，能够共同助力贵方项目在印度市场取得成功与长远发展。
+            现在正是为进入目标市场打下基础的有利时机。随着重磅赛事季节将在三月开启，这一重要窗口为我们提供了极佳的切入机会。在当今互联网时代，越来越多的用户倾向于通过线上渠道参与博彩活动，赛事热度也为我们触达更大规模的目标人群创造了条件。
+            随着网站用户规模的不断积累与扩大，平台将具备可观的创收潜力。我们期望，借助我方在行业内的经验与专业服务，结合贵方的本地资源与渠道优势，能够共同助力项目取得成功与长远发展。
           </p>
         </div>
         <div className="conclusion-image">
@@ -955,7 +943,7 @@ function App() {
             </ul>
           </div>
         </div>
-      </section>
+      </section> */}
 
       <section className="thankyou">
         <div className="thankyou-card thankyou-simple">
