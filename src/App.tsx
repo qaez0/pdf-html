@@ -440,6 +440,17 @@ function App() {
             </div>
           </div>
 
+          {/* <div className="market-card">
+            <div className="market-card-top">
+              <h3>地域重点</h3>
+            </div>
+            <div className="market-card-body">
+              <p>
+                我们的核心市场布局覆盖整个印度，重点聚焦于孟买、德里、班加罗尔等一线及主要城市的核心人群。同时通过多渠道拓展，实现更广泛的覆盖，触达不同层级与地区的用户。
+              </p>
+            </div>
+          </div> */}
+
           <div className="market-card">
             <div className="market-card-top">
               <h3>竞争格局</h3>
