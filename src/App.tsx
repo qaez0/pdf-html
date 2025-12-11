@@ -1,14 +1,18 @@
 import { useCallback, useState } from "react";
 import { jsPDF } from "jspdf";
+import PptxGenJS from "pptxgenjs";
 import html2canvas from "html2canvas";
 import "./App.css";
 
 function App() {
-  const [isExporting, setIsExporting] = useState(false);
+  const [exportingType, setExportingType] = useState<"pdf" | "ppt" | null>(
+    null
+  );
+  const isExporting = exportingType !== null;
 
   const exportToPdf = useCallback(async () => {
     if (isExporting) return;
-    setIsExporting(true);
+    setExportingType("pdf");
 
     try {
       const sections = Array.from(
@@ -104,19 +108,138 @@ function App() {
       console.error("PDF export failed", err);
       alert("Unable to export PDF. Please check console for details.");
     } finally {
-      setIsExporting(false);
+      setExportingType(null);
+    }
+  }, [isExporting]);
+
+  const exportToPpt = useCallback(async () => {
+    if (isExporting) return;
+    setExportingType("ppt");
+
+    try {
+      const sections = Array.from(
+        document.querySelectorAll<HTMLElement>(".page section")
+      );
+
+      if (!sections.length) {
+        alert("No content found to export.");
+        return;
+      }
+
+      await document.fonts.ready;
+
+      const prepareImage = (img: HTMLImageElement) =>
+        new Promise<void>((resolve) => {
+          if (img.src.startsWith("http")) {
+            img.setAttribute("crossorigin", "anonymous");
+            img.setAttribute("referrerpolicy", "no-referrer");
+          }
+
+          if (img.complete && img.naturalWidth !== 0) {
+            resolve();
+            return;
+          }
+
+          const done = () => {
+            img.removeEventListener("load", done);
+            img.removeEventListener("error", done);
+            resolve();
+          };
+
+          img.addEventListener("load", done, { once: true });
+          img.addEventListener("error", done, { once: true });
+        });
+
+      await Promise.all(Array.from(document.images).map(prepareImage));
+
+      const pptx = new PptxGenJS();
+      pptx.layout = "LAYOUT_16x9";
+      const slideWidth = 10; // default 16:9 width in inches
+      const slideHeight = 5.625; // default 16:9 height in inches
+      const pxToIn = (px: number) => px / 96; // browser pixels to inches
+
+      for (let i = 0; i < sections.length; i += 1) {
+        const section = sections[i];
+        const sectionWidth = section.scrollWidth || section.offsetWidth || 1600;
+        const sectionHeight =
+          section.scrollHeight || section.offsetHeight || 900;
+        const maxDim = Math.max(sectionWidth, sectionHeight);
+        const scale = Math.min(2, 1600 / maxDim);
+
+        const canvas = await html2canvas(section, {
+          scale,
+          useCORS: true,
+          allowTaint: false,
+          logging: false,
+          scrollX: 0,
+          scrollY: 0,
+          width: sectionWidth,
+          height: sectionHeight,
+          windowWidth: sectionWidth,
+          windowHeight: sectionHeight,
+          backgroundColor: "#ffffff",
+        });
+
+        const imgData = canvas.toDataURL("image/png");
+        const imgWidthIn = pxToIn(canvas.width);
+        const imgHeightIn = pxToIn(canvas.height);
+        const ratio = Math.min(
+          slideWidth / imgWidthIn,
+          slideHeight / imgHeightIn
+        );
+        const w = imgWidthIn * ratio;
+        const h = imgHeightIn * ratio;
+        const x = (slideWidth - w) / 2;
+        const y = (slideHeight - h) / 2;
+
+        const slide = pptx.addSlide();
+        slide.addImage({
+          data: imgData,
+          x,
+          y,
+          w,
+          h,
+        });
+      }
+
+      await pptx.writeFile({ fileName: "presentation.pptx" });
+    } catch (err) {
+      console.error("PPT export failed", err);
+      alert("Unable to export PPT. Please check console for details.");
+    } finally {
+      setExportingType(null);
     }
   }, [isExporting]);
   return (
     <div className="page">
-      <button
-        type="button"
-        className="export-btn"
-        onClick={exportToPdf}
-        disabled={isExporting}
+      <div
+        className="export-actions"
+        style={{
+          position: "fixed",
+          top: "16px",
+          right: "16px",
+          display: "flex",
+          gap: "10px",
+          zIndex: 1000,
+        }}
       >
-        {isExporting ? "Exporting…" : "Export PDF"}
-      </button>
+        <button
+          type="button"
+          className="export-btn"
+          onClick={exportToPdf}
+          disabled={isExporting}
+        >
+          {exportingType === "pdf" ? "Exporting…" : "Export PDF"}
+        </button>
+        <button
+          type="button"
+          className="export-btn"
+          onClick={exportToPpt}
+          disabled={isExporting}
+        >
+          {exportingType === "ppt" ? "Exporting…" : "Export PPT"}
+        </button>
+      </div>
       <section className="hero">
         <div className="hero-left">
           <img

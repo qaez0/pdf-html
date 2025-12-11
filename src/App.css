@@ -39,9 +39,6 @@
 }
 
 .export-btn {
-  position: fixed;
-  top: 16px;
-  right: 16px;
   padding: 10px 16px;
   border: none;
   border-radius: 10px;
@@ -53,6 +50,10 @@
   cursor: pointer;
   z-index: 50;
   transition: transform 0.1s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+}
+
+.export-actions .export-btn {
+  position: static;
 }
 
 .export-btn:hover:not(:disabled) {
